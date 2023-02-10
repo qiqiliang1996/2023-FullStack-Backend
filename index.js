@@ -43,11 +43,11 @@ app.use('/assets', express.static(path.join(__dirname, '/public/assets')));
 // === FILE STORAGE - all  on the express.js official website (middleware)
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/assets');
+    cb(null, '/public/assets');
   },
   filename: function (req, file, cb) {
     console.log('11  file.originalname', file.originalname);
-    if (fs.existsSync(path.join('public/assets', file.originalname))) {
+    if (fs.existsSync(path.join('/public/assets', file.originalname))) {
       console.log('file already exist!!');
     }
     cb(null, file.originalname);
