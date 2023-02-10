@@ -34,8 +34,14 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    location: String,
-    occupation: String,
+    location: {
+      type: String,
+      required: true,
+    },
+    occupation: {
+      type: String,
+      required: true,
+    },
     viewedProfile: Number,
     impressions: Number,
   },
@@ -62,8 +68,8 @@ export const userValidation = (object) => {
     password: Joi.string().min(5).required(),
     picturePath: Joi.string(),
     friends: Joi.array(),
-    location: Joi.string(),
-    occupation: Joi.string(),
+    location: Joi.string().min(1).required(),
+    occupation: Joi.string().min(1).required(),
   });
   const valiResult = schema.validate(object);
   return valiResult;
