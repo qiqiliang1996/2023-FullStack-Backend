@@ -27,7 +27,8 @@ import { posts, users } from './data/mockData.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-dotenv.config();
+console.log();
+dotenv.config('@@@@@@!!!!!__dirname', __dirname);
 
 const app = express();
 // ==== MIDDLEWARE - all  on the express.js official website (middleware)
@@ -47,9 +48,9 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     console.log('11  file.originalname', file.originalname);
-    if (fs.existsSync(path.join('/public/assets', file.originalname))) {
-      console.log('file already exist!!');
-    }
+    // if (fs.existsSync(path.join('/public/assets', file.originalname))) {
+    //   console.log('file already exist!!');
+    // }
     cb(null, file.originalname);
   },
 });
