@@ -27,8 +27,8 @@ import { posts, users } from './data/mockData.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-console.log();
-dotenv.config('@@@@@@!!!!!__dirname', __dirname);
+console.log('@@@@@@!!!!!__dirname', __dirname);
+dotenv.config();
 
 const app = express();
 // ==== MIDDLEWARE - all  on the express.js official website (middleware)
@@ -44,7 +44,7 @@ app.use('/assets', express.static(path.join(__dirname, '/public/assets')));
 // === FILE STORAGE - all  on the express.js official website (middleware)
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '/public/assets');
+    cb(null, 'public/assets');
   },
   filename: function (req, file, cb) {
     console.log('11  file.originalname', file.originalname);
