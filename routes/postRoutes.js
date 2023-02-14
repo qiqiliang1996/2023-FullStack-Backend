@@ -12,10 +12,12 @@ const {
 
 const router = express.Router();
 
-// router.get('/', verifyTokenMiddleware, getFeedPosts);
-router.get('/', getFeedPosts);
+router.get('/', verifyTokenMiddleware, getFeedPosts);
+// router.get('/', getFeedPosts);
 
 router.get('/:userId/posts', verifyTokenMiddleware, getUserPosts);
+// router.get('/:userId/posts', getUserPosts);
+
 router.patch('/:postId/like', verifyTokenMiddleware, likePost);
 router.delete('/:postId/delete', verifyTokenMiddleware, deletePost);
 

@@ -26,18 +26,14 @@ const { Post } = require('./models/Post');
 
 const { posts, users } = require('./data/mockData');
 
-//
-
 //proper way to set path when we configure directory later
 
 // ====== CONFIGURATION ======
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
-console.log(`1 db is::: ${config.get('db')}`);
-console.log('2 module', module);
+// console.log(`1 db is::: ${config.get('db')}`);
+// console.log('2 module', module);
 
 const app = express();
 // ==== MIDDLEWARE - all  on the express.js official website (middleware)
@@ -48,6 +44,7 @@ app.use(morgan('common'));
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
+app.use('/assets', express.static(path.join(module.path, '/public/assets')));
 // app.use('/assets', express.static(path.join(__dirname, '/public/assets')));
 
 // === FILE STORAGE - all  on the express.js official website (middleware)
@@ -82,7 +79,7 @@ mongoose.set('strictQuery', false);
 mongoose
   .connect(config.get('db'))
   .then(() => {
-    console.log('connect db successfullt!');
+    // console.log('connect db successfullt!');
     //ONLY ADD ONCE, NO NEED AFTER FIRST TIME ADDED
     // User.insertMany(users);
     // Post.insertMany(posts);
@@ -91,6 +88,11 @@ mongoose
     console.log(error, 'can not connect to db..');
   });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`hi~ Listening on PORT ${PORT}..`);
 });
+
+module.exports = server;
+
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
