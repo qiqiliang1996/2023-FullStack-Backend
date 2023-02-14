@@ -1,6 +1,6 @@
-import User from '../models/User.js';
+const { User } = require('../models/User');
 
-export const getUser = async (req, res) => {
+const getUser = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id).select('-password');
@@ -15,7 +15,7 @@ export const getUser = async (req, res) => {
   }
 };
 
-export const getUserFriends = async (req, res) => {
+const getUserFriends = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id).select('-password');
@@ -29,7 +29,7 @@ export const getUserFriends = async (req, res) => {
   }
 };
 
-export const addRemoveFriend = async (req, res) => {
+const addRemoveFriend = async (req, res) => {
   try {
     const { id, friendId } = req.params;
     const user = await User.findById(id).select('-password');
@@ -54,3 +54,6 @@ export const addRemoveFriend = async (req, res) => {
     res.status(500).json({ error: { message: error.message } });
   }
 };
+module.exports.getUser = getUser;
+module.exports.getUserFriends = getUserFriends;
+module.exports.addRemoveFriend = addRemoveFriend;

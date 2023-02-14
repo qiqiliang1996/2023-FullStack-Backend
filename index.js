@@ -1,38 +1,43 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import multer from 'multer';
-import helmet from 'helmet';
-import morgan from 'morgan';
-import path from 'path';
-import fs from 'fs';
-import config from 'config';
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const multer = require('multer');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const path = require('path');
+const config = require('config');
+const { fileURLToPath } = require('url');
 
-import { fileURLToPath } from 'url';
-import { register } from './controllers/auth.js';
-import { createPost } from './controllers/post.js';
+const { register } = require('./controllers/auth');
+const { createPost } = require('./controllers/post');
 
-import authRoutes from './routes/authRoutes.js';
-import userRoutes from './routes/userRoutes.js';
-import postRoutes from './routes/postRoutes.js';
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const postRoutes = require('./routes/postRoutes');
 
-import { verifyTokenMiddleware } from './middlewares/authorizationMiddleware.js';
-import User from './models/User.js';
-import Post from './models/Post.js';
-import { posts, users } from './data/mockData.js';
+const {
+  verifyTokenMiddleware,
+} = require('./middlewares/authorizationMiddleware');
+
+const { User } = require('./models/User');
+const { Post } = require('./models/Post');
+
+const { posts, users } = require('./data/mockData');
+
+//
 
 //proper way to set path when we configure directory later
 
-console.log(`1 db is::: ${config.get('db')}`);
-
 // ====== CONFIGURATION ======
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-// console.log('@@@@@@!!!!!__dirname', __dirname);
 dotenv.config();
+
+console.log(`1 db is::: ${config.get('db')}`);
+console.log('2 module', module);
 
 const app = express();
 // ==== MIDDLEWARE - all  on the express.js official website (middleware)
@@ -43,7 +48,7 @@ app.use(morgan('common'));
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
-app.use('/assets', express.static(path.join(__dirname, '/public/assets')));
+// app.use('/assets', express.static(path.join(__dirname, '/public/assets')));
 
 // === FILE STORAGE - all  on the express.js official website (middleware)
 const storage = multer.diskStorage({
@@ -86,6 +91,6 @@ mongoose
     console.log(error, 'can not connect to db..');
   });
 
-export const server = app.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`hi~ Listening on PORT ${PORT}..`);
 });

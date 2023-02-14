@@ -1,7 +1,7 @@
-import Post from '../models/Post.js';
-import User from '../models/User.js';
+const { Post } = require('../models/Post');
+const { User } = require('../models/User');
 
-export const createPost = async (req, res) => {
+const createPost = async (req, res) => {
   try {
     const { userId, description, picturePath } = req.body;
     const user = await User.findById(userId);
@@ -30,7 +30,7 @@ export const createPost = async (req, res) => {
   }
 };
 
-export const getFeedPosts = async (req, res) => {
+const getFeedPosts = async (req, res) => {
   try {
     const posts = await Post.find().sort({ createdAt: -1 });
     res.status(200).json(posts);
@@ -39,7 +39,7 @@ export const getFeedPosts = async (req, res) => {
   }
 };
 
-export const getUserPosts = async (req, res) => {
+const getUserPosts = async (req, res) => {
   const { userId } = req.params;
   try {
     const posts = await Post.find({ userId });
@@ -50,7 +50,7 @@ export const getUserPosts = async (req, res) => {
   }
 };
 
-export const likePost = async (req, res) => {
+const likePost = async (req, res) => {
   const { postId } = req.params;
   const { userId } = req.body;
   try {
@@ -77,7 +77,7 @@ export const likePost = async (req, res) => {
   }
 };
 
-export const deletePost = async (req, res) => {
+const deletePost = async (req, res) => {
   console.log('1 backend called');
   const { postId } = req.params;
   const { userId } = req.body;
@@ -98,3 +98,9 @@ export const deletePost = async (req, res) => {
     res.status(409).json({ error: { message: error.message } });
   }
 };
+
+module.exports.createPost = createPost;
+module.exports.getFeedPosts = getFeedPosts;
+module.exports.getUserPosts = getUserPosts;
+module.exports.likePost = likePost;
+module.exports.deletePost = deletePost;

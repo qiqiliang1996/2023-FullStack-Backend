@@ -1,9 +1,9 @@
-import bcrypt from 'bcrypt';
-import User, { userValidation } from '../models/User.js';
-import _ from 'lodash';
-import Joi from 'joi';
+const bcrypt = require('bcrypt');
+const _ = require('lodash');
+const Joi = require('joi');
+const { User, userValidation } = require('../models/User');
 
-export const register = async (req, res) => {
+const register = async (req, res) => {
   try {
     const {
       firstName,
@@ -74,7 +74,7 @@ export const register = async (req, res) => {
   }
 };
 
-export const login = async (req, res) => {
+const login = async (req, res) => {
   //step1: check the login email & password whether or not pass the validation
   const loginValidation = (user) => {
     const schema = Joi.object({
@@ -135,3 +135,6 @@ export const login = async (req, res) => {
     res.status(500).json({ error: { message: error.message } });
   }
 };
+
+module.exports.register = register;
+module.exports.login = login;

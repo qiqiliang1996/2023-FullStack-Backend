@@ -1,10 +1,12 @@
-import express from 'express';
-import {
+const express = require('express');
+const {
   getUser,
   getUserFriends,
   addRemoveFriend,
-} from '../controllers/user.js';
-import { verifyTokenMiddleware } from '../middlewares/authorizationMiddleware.js';
+} = require('../controllers/user');
+const {
+  verifyTokenMiddleware,
+} = require('../middlewares/authorizationMiddleware');
 
 const router = express.Router();
 
@@ -13,4 +15,4 @@ router.get('/:id/friends', verifyTokenMiddleware, getUserFriends);
 
 router.patch('/:id/:friendId', verifyTokenMiddleware, addRemoveFriend);
 
-export default router;
+module.exports = router;

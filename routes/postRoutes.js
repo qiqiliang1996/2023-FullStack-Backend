@@ -1,11 +1,14 @@
-import express from 'express';
-import {
+const express = require('express');
+const {
   getFeedPosts,
   getUserPosts,
   likePost,
   deletePost,
-} from '../controllers/post.js';
-import { verifyTokenMiddleware } from '../middlewares/authorizationMiddleware.js';
+} = require('../controllers/post');
+
+const {
+  verifyTokenMiddleware,
+} = require('../middlewares/authorizationMiddleware');
 
 const router = express.Router();
 
@@ -16,4 +19,4 @@ router.get('/:userId/posts', verifyTokenMiddleware, getUserPosts);
 router.patch('/:postId/like', verifyTokenMiddleware, likePost);
 router.delete('/:postId/delete', verifyTokenMiddleware, deletePost);
 
-export default router;
+module.exports = router;
