@@ -9,7 +9,9 @@ import { verifyTokenMiddleware } from '../middlewares/authorizationMiddleware.js
 
 const router = express.Router();
 
-router.get('/', verifyTokenMiddleware, getFeedPosts);
+// router.get('/', verifyTokenMiddleware, getFeedPosts);
+router.get('/', getFeedPosts);
+
 router.get('/:userId/posts', verifyTokenMiddleware, getUserPosts);
 router.patch('/:postId/like', verifyTokenMiddleware, likePost);
 router.delete('/:postId/delete', verifyTokenMiddleware, deletePost);

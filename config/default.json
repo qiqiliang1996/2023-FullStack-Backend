@@ -1,0 +1,4 @@
+{
+    "name":"Default Name -- QIQI FULLSTACK - default",
+    "db":"mongodb://localhost/qiqiFullstackBackend"
+}

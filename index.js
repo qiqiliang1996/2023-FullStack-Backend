@@ -8,6 +8,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
 import fs from 'fs';
+import config from 'config';
+
 import { fileURLToPath } from 'url';
 import { register } from './controllers/auth.js';
 import { createPost } from './controllers/post.js';
@@ -23,11 +25,13 @@ import { posts, users } from './data/mockData.js';
 
 //proper way to set path when we configure directory later
 
+console.log(`1 db is::: ${config.get('db')}`);
+
 // ====== CONFIGURATION ======
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-console.log('@@@@@@!!!!!__dirname', __dirname);
+// console.log('@@@@@@!!!!!__dirname', __dirname);
 dotenv.config();
 
 const app = express();
@@ -68,14 +72,12 @@ app.use('/posts', postRoutes);
 
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 6001;
+
 mongoose.set('strictQuery', false);
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(config.get('db'))
   .then(() => {
-    app.listen(PORT, () => {
-      console.log(`hi~ Listening on PORT ${PORT}..`);
-    });
-
+    console.log('connect db successfullt!');
     //ONLY ADD ONCE, NO NEED AFTER FIRST TIME ADDED
     // User.insertMany(users);
     // Post.insertMany(posts);
@@ -83,3 +85,7 @@ mongoose
   .catch((error) => {
     console.log(error, 'can not connect to db..');
   });
+
+export const server = app.listen(PORT, () => {
+  console.log(`hi~ Listening on PORT ${PORT}..`);
+});
