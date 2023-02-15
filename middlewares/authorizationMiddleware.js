@@ -12,7 +12,7 @@ const verifyTokenMiddleware = async (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    res.user = decoded; //重点
+    req.user = decoded; //重点
     next();
   } catch (error) {
     res.status(500).json({ error: error.message });

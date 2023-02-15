@@ -89,7 +89,7 @@ mongoose
   });
 
 const server = app.listen(PORT, () => {
-  console.log(`hi~ Listening on PORT ${PORT}..`);
+  // console.log(`hi~ Listening on PORT ${PORT}..`);
 });
 
 module.exports = server;

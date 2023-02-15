@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll --verbose",
+    "test": "jest --watchAll --verbose --coverage --maxWorkers=1",
     "start": "node index.js"
   },
   "engines": {
@@ -11,7 +11,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "ISC", 
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.0",

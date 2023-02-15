@@ -18,7 +18,7 @@ const register = async (req, res) => {
 
     //step1: check the input whether or not pass the validation
     const registerUserValiResult = userValidation(req.body);
-    console.log('registerUserValiResult', registerUserValiResult);
+    // console.log('registerUserValiResult', registerUserValiResult);
 
     if (registerUserValiResult.error) {
       res
@@ -97,8 +97,10 @@ const login = async (req, res) => {
   //step2: check the login email whether or not existed
   try {
     const { email, password } = req.body;
+
+    // console.log('lll  email, password ', email, password);
     const result = await User.findOne({ email: email });
-    // console.log('backend login result', result);
+    // console.log('kkk backend login result', result);
     if (!result) {
       res.status(400).json({
         error: {
@@ -109,6 +111,7 @@ const login = async (req, res) => {
     }
     //step3: check the login password input whether or not matching the databse password
     const validPassword = await bcrypt.compare(password, result.password);
+    // console.log('jjj validPassword', validPassword);
     if (!validPassword) {
       res
         .status(400)

@@ -8,7 +8,7 @@ const createPost = async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user)
-      return res.status(404).json({ error: { message: 'User not found' } });
+      return res.status(400).json({ error: { message: 'User not found' } });
 
     const newPost = new Post({
       userId,
@@ -63,7 +63,7 @@ const likePost = async (req, res) => {
     const post = await Post.findById(postId);
 
     if (!post)
-      return res.status(404).json({ error: { message: 'Post not found' } });
+      return res.status(400).json({ error: { message: 'Post not found' } });
 
     const isLike = post.likes.get(userId); //mongodb Map.get()
     if (isLike) {
@@ -84,20 +84,20 @@ const likePost = async (req, res) => {
 };
 
 const deletePost = async (req, res) => {
-  console.log('1 backend called');
+  // console.log('1 backend called');
   const { postId } = req.params;
   const { userId } = req.body;
 
   try {
     const deletedPost = await Post.findByIdAndDelete(postId);
-    console.log('2 backend deletedPost,', deletedPost);
+    // console.log('2 backend deletedPost,', deletedPost);
 
     if (!deletedPost) {
-      res.status(404).send('sorry, genre with the given id is not found');
+      res.status(400).send('sorry, genre with the given id is not found');
       return;
     }
     const allPostsAfterDeletion = await Post.find().sort({ createdAt: -1 });
-    console.log('3 backend allPostsAfterDeletion,', allPostsAfterDeletion);
+    // console.log('3 backend allPostsAfterDeletion,', allPostsAfterDeletion);
 
     res.status(200).json({ deletedPost, allPostsAfterDeletion });
   } catch (error) {
